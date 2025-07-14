@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CineWorld - Your Futuristic Movie Destination</title>
+    
+    <!-- Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <style>
+        /* CSS ka Jadoo Yahan Se Shuru! */
+        
+        /* ------------------------- */
+        /* ----- ROOT VARIABLES ---- */
+        /* ------------------------- */
+        :root {
+            --dark-bg: #0b0c10;
+            --primary-bg: #1f2833;
+            --secondary-bg: #1a1a2e;
+            --glass-bg: rgba(26, 26, 46, 0.5);
+            --text-color: #c5c6c7;
+            --neon-blue: #66fcf1;
+            --neon-pink: #f50057;
+            --neon-purple: #9d00ff;
+            --font-main: 'Poppins', sans-serif;
+            --font-title: 'Bebas Neue', cursive;
+        }
+
+        [data-theme="light"] {
+            --dark-bg: #f4f4f9;
+            --primary-bg: #ffffff;
+            --secondary-bg: #e4e6eb;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --text-color: #1c1e21;
+            --neon-blue: #007bff;
+            --neon-pink: #e91e63;
+            --neon-purple: #6f42c1;
+        }
+
+        /* ------------------------- */
+        /* ------- GLOBAL STYLES --- */
+        /* ------------------------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background-color: var(--dark-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Animated Gradient Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(315deg, rgba(102,252,241,0.1), rgba(11,12,16,0.1), rgba(245,0,87,0.1));
+            background-size: 400% 400%;
+            animation: gradientAnimation 15s ease infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--neon-blue);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-pink);
+        }
+        
+        /* ------------------------- */
+        /* ----- LOADING SCREEN ---- */
+        /* ------------------------- */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b0c10;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .loading-screen .logo-loader {
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* ------------------------- */
+        /* ----- HEADER & NAV ------ */
+        /* ------------------------- */
+        header {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-family: var(--font-title);
+            font-size: 2rem;
+            color: var(--neon-blue);
+            text-decoration: none;
+            text-shadow: 0 0 5px var(--neon-blue);
+        }
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            filter: drop-shadow(0 0 3px var(--neon-blue));
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            align-items: center;
+        }
+        nav ul li {
+            margin: 0 15px;
+        }
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: var(--neon-blue);
+        }
+        nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--neon-pink);
+            transition: width 0.3s;
+        }
+        nav a:hover::after {
+            width: 100%;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-right .social-icon, .theme-toggle {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            transition: color 0.3s, transform 0.3s;
+        }
+        .nav-right .social-icon:hover {
+            color: var(--neon-pink);
+            transform: scale(1.2);
+        }
+        .theme-toggle {
+            cursor: pointer;
+        }
+        .theme-toggle:hover {
+            color: var(--neon-blue);
+        }
+
+        /* ------------------------- */
+        /* ------ HERO SECTION ----- */
+        /* ------------------------- */
+        .hero {
+            height: 90vh;
+            display: flex;
+            align-items: flex-end;
+            padding: 5%;
+            background: linear-gradient(to top, rgba(11,12,16,1) 10%, rgba(11,12,16,0) 80%), url('https://images.hdqwalls.com/wallpapers/dune-part-two-2024-5k-w9.jpg') no-repeat center center/cover;
+            position: relative;
+        }
+        .hero-content {
+            max-width: 600px;
+            z-index: 2;
+        }
+        .hero-content h1 {
+            font-family: var(--font-title);
+            font-size: 5rem;
+            line-height: 1;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+        .hero-content p {
+            font-size: 1rem;
+            margin: 1rem 0 2rem;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        .hero-buttons .btn {
+            padding: 12px 30px;
+            margin-right: 15px;
+            border: 2px solid var(--neon-blue);
+            background: var(--glass-bg);
+            backdrop-filter: blur(5px);
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .hero-buttons .btn:hover {
+            background-color: var(--neon-blue);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px var(--neon-blue), 0 0 30px var(--neon-blue);
+            transform: translateY(-3px);
+        }
+        .btn.primary {
+            background-color: var(--neon-blue);
+            color: var(--dark-bg);
+        }
+        .btn.primary:hover {
+            background-color: transparent;
+            color: #fff;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+
+        /* ------------------------- */
+        /* ---- STICKY SEARCH & INFO - */
+        /* ------------------------- */
+        .sticky-section {
+            padding: 1.5rem 5%;
+            background: var(--primary-bg);
+            position: sticky;
+            top: 75px; /* header height */
+            z-index: 900;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .search-bar {
+            display: flex;
+            gap: 10px;
+            flex-grow: 1;
+        }
+        .search-bar input, .search-bar select {
+            padding: 10px;
+            border: 1px solid var(--neon-blue);
+            background: var(--dark-bg);
+            color: var(--text-color);
+            border-radius: 5px;
+            font-size: 0.9rem;
+        }
+        .search-bar input {
+            flex-grow: 1;
+            min-width: 200px;
+        }
+        .live-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            font-weight: 600;
+        }
+        .live-time, .trending-now {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .trending-now i {
+            color: var(--neon-pink);
+            animation: fire 1s infinite alternate;
+        }
+        @keyframes fire {
+            from { transform: scale(1); }
+            to { transform: scale(1.2); }
+        }
+
+        /* ------------------------- */
+        /* ------- MOVIE GRID ------ */
+        /* ------------------------- */
+        .section {
+            padding: 3rem 5%;
+        }
+        .section-title {
+            font-family: var(--font-title);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid var(--neon-pink);
+            padding-left: 15px;
+            color: #fff;
+        }
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+        .movie-card {
+            background: var(--primary-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .movie-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px var(--neon-purple);
+        }
+        .movie-card img {
+            width: 100%;
+            height: 270px;
+            object-fit: cover;
+            display: block;
+            transition: opacity 0.3s;
+        }
+        .movie-card:hover img {
+            opacity: 0.4;
+        }
+        .movie-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            transform: translateY(100%);
+            transition: transform 0.4s ease;
+        }
+        .movie-card:hover .movie-info {
+            transform: translateY(0);
+        }
+        .movie-info h3 {
+            font-size: 1rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .rating {
+            color: #ffc107;
+            font-weight: 700;
+        }
+        .tags {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .tag {
+            background: var(--neon-pink);
+            color: #fff;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        .tag.new { background: var(--neon-blue); color: var(--dark-bg); }
+
+        /* ------------------------- */
+        /* -------- CAROUSEL ------- */
+        /* ------------------------- */
+        .carousel {
+            position: relative;
+        }
+        .carousel-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 20px;
+            scrollbar-width: none; /* Firefox */
+        }
+        .carousel-track::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        .carousel-track .movie-card {
+            flex: 0 0 220px; /* Card width */
+            margin-right: 20px;
+            scroll-snap-align: start;
+        }
+        .carousel-track .movie-card img {
+            height: 330px;
+        }
+
+        /* ------------------------- */
+        /* --------- FOOTER -------- */
+        /* ------------------------- */
+        footer {
+            background: var(--primary-bg);
+            padding: 2rem 5%;
+            margin-top: 3rem;
+            border-top: 2px solid var(--neon-blue);
+            text-align: center;
+        }
+        .footer-links {
+            margin-bottom: 1rem;
+        }
+        .footer-links a {
+            color: var(--text-color);
+            margin: 0 15px;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            color: var(--neon-blue);
+        }
+        .copyright {
+            font-size: 0.9rem;
+        }
+        .copyright span {
+            color: var(--neon-pink);
+            font-weight: bold;
+        }
+
+        /* ------------------------- */
+        /* ------ RESPONSIVENESS --- */
+        /* ------------------------- */
+        @media (max-width: 992px) {
+            nav ul {
+                display: none; /* Simple hiding for demo. A real site would use a hamburger menu */
+            }
+            .hero-content h1 {
+                font-size: 4rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sticky-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-bar {
+                width: 100%;
+            }
+            .hero {
+                height: 70vh;
+            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .hero-content p {
+                font-size: 0.9rem;
+            }
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            .movie-card img {
+                height: 220px;
+            }
+            .carousel-track .movie-card {
+                flex: 0 0 180px;
+            }
+            .carousel-track .movie-card img {
+                height: 270px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 1rem 3%;
+            }
+            .section {
+                padding: 2rem 3%;
+            }
+            .hero-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            .hero-buttons .btn {
+                width: 100%;
+                text-align: center;
+                margin-right: 0;
+            }
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 15px;
+            }
+             .movie-card img {
+                height: 180px;
+            }
+        }
+
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Loading Screen Start -->
+    <div class="loading-screen">
+        <div class="logo-loader">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="100px" height="100px" color="var(--neon-blue)">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 15c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm-1-7h2v6h-2v-6zm-3.5-3.5l1.41 1.41-1.06 1.06-1.41-1.41 1.06-1.06zM6 12H4v-2h2v2zm12 0h-2v-2h2v2zm-4.94 4.94l1.41-1.41-1.06-1.06-1.41 1.41 1.06 1.06zM7.05 7.05l1.41 1.41-1.06 1.06L6 8.46l1.05-1.41zM19 19l-3-3v-2h-2l-3 3h8zM5 5l3 3v2h2l3-3H5z"/>
+                <path d="M18,3.41l-1.41-1.41L12,6.59l-4.59-4.59L6,3.41L10.59,8L6,12.59l1.41,1.41L12,9.41l4.59,4.59L18,12.59L13.41,8L18,3.41z" style="fill: var(--neon-pink);"></path>
+            </svg>
+        </div>
+    </div>
+    <!-- Loading Screen End -->
+
+
+    <!-- Header Start -->
+    <header>
+        <a href="#" class="logo">
+            <!-- Crown + Reel SVG Logo -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M5 20v-2h14v2H5zm14-14h-2V4h-2v2H9V4H7v2H5c-1.11 0-1.99.9-1.99 2L3 18c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-4-4l-2 2-2-2h4zM7 16H5v-2h2v2zm0-4H5v-2h2v2zm0-4H5V8h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V8h2v2z"></path>
+            </svg>
+            CineWorld
+        </a>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">Web Series</a></li>
+                <li><a href="#">Genres</a></li>
+            </ul>
+        </nav>
+        <div class="nav-right">
+            <a href="#" class="social-icon"><i class="fa-solid fa-magnifying-glass"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-telegram"></i></a>
+            <a href="#" class="social-icon"><i class="fa-brands fa-instagram"></i></a>
+            <div class="theme-toggle" id="theme-toggle">
+                <i class="fa-solid fa-moon"></i>
+            </div>
+        </div>
+    </header>
+    <!-- Header End -->
+
+    <main>
+        <!-- Hero Section Start -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Dune: Part Two</h1>
+                <p>Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family. Facing a choice between the love of his life and the fate of the universe, he must prevent a terrible future only he can foresee.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn primary"><i class="fa-solid fa-play"></i> Watch Now</a>
+                    <a href="#" class="btn"><i class="fa-solid fa-download"></i> Download</a>
+                </div>
+            </div>
+        </section>
+        <!-- Hero Section End -->
+
+        <!-- Sticky Search & Info Start -->
+        <section class="sticky-section">
+            <div class="search-bar">
+                <input type="text" placeholder="Search by title...">
+                <select><option>Genre</option></select>
+                <select><option>Language</option></select>
+                <select><option>Year</option></select>
+            </div>
+            <div class="live-info">
+                <div class="trending-now">
+                    <i class="fa-solid fa-fire"></i> Trending
+                </div>
+                <div class="live-time" id="live-time">
+                    <i class="fa-solid fa-clock"></i> 10:30:45 PM
+                </div>
+            </div>
+        </section>
+        <!-- Sticky Search & Info End -->
+
+        <!-- Latest Uploads Carousel Start -->
+        <section class="section">
+            <h2 class="section-title">Latest Uploads</h2>
+            <div class="carousel">
+                <div class="carousel-track">
+                    <!-- Movie Card 1 -->
+                    <div class="movie-card">
+                        <img src="https://image.tmdb.org/t/p/w500/1pdfLvkbY9ohJlCjQH2CZjjYVvJ.jpg" alt="Movie Poster">
+                        <div class="tags">
+                            <span class="tag new">NEW</span>
+                            <span class="tag">HD</span>
+                        </div>
+                        <div class="movie-info">
+                            <h3>Kung Fu Panda 4</h3>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 7.2</span>
+                        </div>
+                    </div>
+                    <!-- Movie Card 2 -->
+                    <div class="movie-card">
+                        <img src="https://image.tmdb.org/t/p/w500/kDp1vUB0_4YG2s7v211e4d1gAAM.jpg" alt="Movie Poster">
+                         <div class="tags">
+                            <span class="tag new">NEW</span>
+                            <span class="tag">Dubbed</span>
+                        </div>
+                        <div class="movie-info">
+                            <h3>Godzilla x Kong</h3>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 8.1</span>
+                        </div>
+                    </div>
+                    <!-- Movie Card 3 -->
+                    <div class="movie-card">
+                        <img src="https://image.tmdb.org/t/p/w500/7O4i3GfV2Jmg3iR0iTf4uL1vGQI.jpg" alt="Movie Poster">
+                         <div class="tags"><span class="tag">HD</span></div>
+                        <div class="movie-info">
+                            <h3>The Fall Guy</h3>
+                            <span class="rating"><i class="fa-solid fa-star"></i> 7.8</span>
+                        </div>
+                    </div>
+                    <!-- ... Add 7 more cards ... -->
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/z1p34vtdxa4i_kaA9v8zuVUTdii.jpg" alt="Movie Poster"><div class="movie-info"><h3>Civil War</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.5</span></div></div>
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/y2Aimt8isimTf_c3Sj3S7s8S12L.jpg" alt="Movie Poster"><div class="movie-info"><h3>Furiosa</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.5</span></div></div>
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/sh7Rg8Er3tFcN9BpKIPOMvALgZd.jpg" alt="Movie Poster"><div class="movie-info"><h3>Oppenheimer</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.6</span></div></div>
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/8Gxv8gSFCU0XGDykEGv7zR1n2ua.jpg" alt="Movie Poster"><div class="movie-info"><h3>Poor Things</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.3</span></div></div>
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/fiVW06jE7z9YnO4trhaMEdclSiC.jpg" alt="Movie Poster"><div class="movie-info"><h3>The Marvels</h3><span class="rating"><i class="fa-solid fa-star"></i> 6.2</span></div></div>
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/gKkl37BQuKTanygYQG1pyYgLVgf.jpg" alt="Movie Poster"><div class="movie-info"><h3>Kingdom of the Planet of the Apes</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.9</span></div></div>
+                    <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/vBZ0qvaRxqEhZwl6ssne85aZ0d.jpg" alt="Movie Poster"><div class="movie-info"><h3>The Creator</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.1</span></div></div>
+                </div>
+            </div>
+        </section>
+        <!-- Latest Uploads Carousel End -->
+
+        <!-- Hollywood Movies Start -->
+        <section class="section">
+            <h2 class="section-title">Hollywood Movies</h2>
+            <div class="movie-grid">
+                <!-- Movie Cards -->
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/qekky2L2s55P2K4T33tGna8M2y.jpg" alt="Movie"><div class="movie-info"><h3>Aquaman 2</h3><span class="rating"><i class="fa-solid fa-star"></i> 6.9</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/sRLC052ieEzkQs9dEtPMfFxYkej.jpg" alt="Movie"><div class="movie-info"><h3>Transformers: Rise of the Beasts</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.5</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/rktDFPbfEOMYf_jwUjFBdKx7sdG.jpg" alt="Movie"><div class="movie-info"><h3>John Wick: Chapter 4</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.1</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/hR1jdCw0A9czgsbp45TASkjj3N0.jpg" alt="Movie"><div class="movie-info"><h3>Mission: Impossible 7</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.8</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/4m1Au3YkjqsxF8iwQy0fPYSxE0h.jpg" alt="Movie"><div class="movie-info"><h3>The Flash</h3><span class="rating"><i class="fa-solid fa-star"></i> 6.8</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/A3ZbZsmsvLdEo3a2V1S5a2jjd22.jpg" alt="Movie"><div class="movie-info"><h3>Avatar: The Way of Water</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.0</span></div></div>
+            </div>
+        </section>
+        <!-- Hollywood Movies End -->
+        
+        <!-- Other Sections ... -->
+        <section class="section">
+            <h2 class="section-title">South Dubbed Dhamaka</h2>
+            <div class="movie-grid">
+                 <!-- Movie Cards -->
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/4cso9dJ2pcw9hTmWX2Gr4CHaVT4.jpg" alt="Movie"><div class="movie-info"><h3>Pushpa: The Rise</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.3</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/deo54dhEkyiA2gC4a6d0yY8tW2A.jpg" alt="Movie"><div class="movie-info"><h3>K.G.F: Chapter 2</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.7</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/cQvc9N6JiMVKqol3wcYrGshsIdZ.jpg" alt="Movie"><div class="movie-info"><h3>RRR</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.5</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/eifHIsiI2tK5B2S22a1aZx2bc9M.jpg" alt="Movie"><div class="movie-info"><h3>Jailer</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.4</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/h1WYD42dWyXUeY7bL4nbuLpxg04.jpg" alt="Movie"><div class="movie-info"><h3>Leo</h3><span class="rating"><i class="fa-solid fa-star"></i> 7.6</span></div></div>
+                <div class="movie-card"><img src="https://image.tmdb.org/t/p/w500/iLGNJt0Lhm2BvNlAUkKsf2vF1uS.jpg" alt="Movie"><div class="movie-info"><h3>Vikram</h3><span class="rating"><i class="fa-solid fa-star"></i> 8.2</span></div></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer Start -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">DMCA</a>
+            <a href="#">Contact</a>
+            <a href="#">Privacy Policy</a>
+        </div>
+        <div class="copyright">
+            &copy; 2024 <span>CineWorld</span>. All Rights Reserved. Designed with <i class="fa-solid fa-fire" style="color:var(--neon-pink)"></i> & <i class="fa-solid fa-heart" style="color:var(--neon-blue)"></i>.
+        </div>
+    </footer>
+    <!-- Footer End -->
+
+    <script>
+        // Thoda sa JavaScript ka Tadka
+
+        // 1. Loading Screen Hatao
+        window.addEventListener('load', () => {
+            const loader = document.querySelector('.loading-screen');
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 1000); // 1 second ke baad hide
+        });
+
+        // 2. Live Time Dikhao
+        function updateTime() {
+            const timeElement = document.getElementById('live-time');
+            const now = new Date();
+            const timeString = now.toLocaleTimeString();
+            timeElement.innerHTML = `<i class="fa-solid fa-clock"></i> ${timeString}`;
+        }
+        setInterval(updateTime, 1000);
+        updateTime(); // initial call
+
+        // 3. Light/Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const body = document.body;
+        const toggleIcon = themeToggle.querySelector('i');
+
+        themeToggle.addEventListener('click', () => {
+            if (body.dataset.theme === 'dark') {
+                body.dataset.theme = 'light';
+                toggleIcon.classList.remove('fa-moon');
+                toggleIcon.classList.add('fa-sun');
+            } else {
+                body.dataset.theme = 'dark';
+                toggleIcon.classList.remove('fa-sun');
+                toggleIcon.classList.add('fa-moon');
+            }
+        });
+    </script>
+
+</body>
+</html>
